@@ -1,0 +1,2 @@
+# 开发与实验复现所需依赖（运行程序本身只需 requirements.txt）
+pytest==9.2.0
