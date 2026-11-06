@@ -147,20 +147,6 @@ quantum-circuit-studio/
 
 主窗口采用 **组合 + Mixin** 的分层方式：`MainWindow` 只负责组合与初始化，具体能力（界面、电路、仿真、导出、助手、历史）各自独立成模块，便于单独阅读和替换。计算逻辑集中在 `engine.py`，测试可直接对解析解断言，无需启动界面。
 
-## 打包发布
-
-```bash
-python -m pip install pyinstaller
-python -m PyInstaller --noconfirm --clean --windowed \
-  --name QuantumCircuitStudio --icon app_icon.ico \
-  --collect-all pennylane --collect-all matplotlib \
-  main.py
-```
-
-- 产物位于 `dist/QuantumCircuitStudio/`
-- `pennylane` 与 `matplotlib` 需要 `--collect-all` 才能带上数据文件
-- PyInstaller 不会自动打入 `deepseek_config.json`，若希望打包后免配置，请自行在构建脚本中把它加入 `datas`，并注意产物中会包含密钥、不要公开分发
-
 ## 常见问题
 
 **matplotlib 图表中文显示为方块？**
