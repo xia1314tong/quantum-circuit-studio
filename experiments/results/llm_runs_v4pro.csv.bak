@@ -1,0 +1,173 @@
+arm,task,rep,round,layer,passed,prompt_tokens,completion_tokens,reasoning_tokens,finish_reason,elapsed_s,detail
+resample,bell,0,1,pass,1,307,201,143,stop,3.39,
+resample,bell,1,1,pass,1,307,274,232,stop,3.66,
+resample,bell,2,1,pass,1,307,145,87,stop,2.09,
+resample,ghz3,0,1,pass,1,308,712,629,stop,9.11,
+resample,ghz3,1,1,pass,1,308,595,536,stop,7.9,
+resample,ghz3,2,1,pass,1,308,417,334,stop,5.15,
+resample,ghz4,0,1,pass,1,310,308,200,stop,4.54,
+resample,ghz4,1,1,pass,1,310,1220,1144,stop,15.85,
+resample,ghz4,2,1,pass,1,310,1311,1235,stop,16.09,
+resample,ghz5,0,1,pass,1,310,548,415,stop,7.44,
+resample,ghz5,1,1,pass,1,310,996,863,stop,12.55,
+resample,ghz5,2,1,pass,1,310,1054,921,stop,12.58,
+resample,ghz5_layout,0,1,pass,1,351,570,437,stop,5.81,
+resample,ghz5_layout,1,1,pass,1,351,503,370,stop,4.75,
+resample,ghz5_layout,2,1,pass,1,351,316,183,stop,3.44,
+resample,plus2,0,1,pass,1,322,576,551,stop,7.16,
+resample,plus2,1,1,pass,1,322,292,259,stop,4.18,
+resample,plus2,2,1,pass,1,322,133,100,stop,2.34,
+resample,uniform3,0,1,pass,1,302,246,177,stop,3.5,
+resample,uniform3,1,1,pass,1,302,209,140,stop,3.11,
+resample,uniform3,2,1,pass,1,302,244,195,stop,3.83,
+resample,w3,0,1,truncated,0,311,16000,16000,length,195.69,
+resample,w3,0,2,truncated,0,311,16000,16000,length,191.52,
+resample,w3,0,3,truncated,0,311,16000,16000,length,204.03,
+resample,w3,1,1,truncated,0,311,16000,16000,length,201.17,
+resample,w3,1,2,truncated,0,311,16000,16000,length,185.32,
+resample,w3,1,3,truncated,0,311,16000,16000,length,172.26,
+resample,w3,2,1,truncated,0,311,16000,16000,length,166.7,
+resample,w3,2,2,truncated,0,311,16000,16000,length,168.64,
+resample,w3,2,3,truncated,0,311,16000,16000,length,164.75,
+resample,bitflip1,0,1,pass,1,297,102,77,stop,2.19,
+resample,bitflip1,1,1,pass,1,297,124,91,stop,2.55,
+resample,bitflip1,2,1,pass,1,297,131,98,stop,2.06,
+resample,ry_quarter,0,1,pass,1,310,235,199,stop,3.01,
+resample,ry_quarter,1,1,pass,1,310,293,257,stop,3.23,
+resample,ry_quarter,2,1,pass,1,310,601,555,stop,7.09,
+resample,qft2,0,1,truncated,0,327,16000,16000,length,152.32,
+resample,qft2,0,2,truncated,0,327,16000,16000,length,151.29,
+resample,qft2,0,3,truncated,0,327,16000,16000,length,153.04,
+resample,qft2,1,1,truncated,0,327,16000,16000,length,153.96,
+resample,qft2,1,2,truncated,0,327,16000,16000,length,144.55,
+resample,qft2,1,3,truncated,0,327,16000,16000,length,161.28,
+resample,qft2,2,1,truncated,0,327,16000,16000,length,141.56,
+resample,qft2,2,2,truncated,0,327,16000,16000,length,158.62,
+resample,qft2,2,3,truncated,0,327,16000,16000,length,152.64,
+resample,minus1,0,1,pass,1,304,533,482,stop,5.93,
+resample,minus1,1,1,pass,1,304,1123,1077,stop,11.06,
+resample,minus1,2,1,pass,1,304,1516,1479,stop,15.85,
+resample,w4,0,1,truncated,0,319,16000,16000,length,153.55,
+resample,w4,0,2,truncated,0,319,16000,16000,length,162.76,
+resample,w4,0,3,truncated,0,319,16000,16000,length,163.92,
+resample,w4,1,1,truncated,0,319,16000,16000,length,160.7,
+resample,w4,1,2,truncated,0,319,16000,16000,length,166.91,
+resample,w4,1,3,truncated,0,319,16000,16000,length,159.12,
+resample,w4,2,1,truncated,0,319,16000,16000,length,165.73,
+resample,w4,2,2,truncated,0,319,16000,16000,length,149.21,
+resample,w4,2,3,truncated,0,319,16000,16000,length,147.0,
+resample,qft3,0,1,truncated,0,330,16000,16000,length,148.04,
+resample,qft3,0,2,truncated,0,330,16000,16000,length,153.4,
+resample,qft3,0,3,truncated,0,330,16000,16000,length,146.49,
+resample,qft3,1,1,truncated,0,330,16000,16000,length,153.12,
+resample,qft3,1,2,pass,1,330,15545,15100,stop,130.55,
+resample,qft3,2,1,truncated,0,330,16000,16000,length,141.28,
+resample,qft3,2,2,truncated,0,330,16000,16000,length,153.59,
+resample,qft3,2,3,truncated,0,330,16000,16000,length,145.38,
+resample,ghz6,0,1,pass,1,310,760,650,stop,7.03,
+resample,ghz6,1,1,pass,1,310,597,487,stop,6.35,
+resample,ghz6,2,1,pass,1,310,764,654,stop,8.31,
+resample,ghz8,0,1,pass,1,312,639,431,stop,6.53,
+resample,ghz8,1,1,pass,1,312,727,583,stop,6.99,
+resample,ghz8,2,1,pass,1,312,709,565,stop,7.09,
+resample,uniform4,0,1,pass,1,302,220,133,stop,4.08,
+resample,uniform4,1,1,pass,1,302,219,158,stop,2.64,
+resample,uniform4,2,1,pass,1,302,170,109,stop,2.41,
+resample,plusi,0,1,pass,1,305,1712,1675,stop,17.0,
+resample,plusi,1,1,pass,1,305,938,889,stop,9.34,
+resample,plusi,2,1,pass,1,305,1682,1636,stop,15.74,
+resample,bell_minus,0,1,pass,1,304,1324,1270,stop,12.78,
+resample,bell_minus,1,1,pass,1,304,634,558,stop,7.41,
+resample,bell_minus,2,1,pass,1,304,960,876,stop,9.78,
+resample,bell_psi,0,1,pass,1,304,10861,10767,stop,101.22,
+resample,bell_psi,1,1,pass,1,304,1634,1540,stop,15.86,
+resample,bell_psi,2,1,pass,1,304,4457,4368,stop,42.85,
+resample,partial_ent,0,1,pass,1,325,583,512,stop,5.95,
+resample,partial_ent,1,1,pass,1,325,665,594,stop,6.77,
+resample,partial_ent,2,1,pass,1,325,642,571,stop,6.5,
+resample,cluster3,0,1,pass,1,348,5442,5311,stop,53.21,
+resample,cluster3,1,1,pass,1,348,5406,5275,stop,53.92,
+resample,cluster3,2,1,pass,1,348,5116,4985,stop,50.25,
+resample,ghz4_layout,0,1,pass,1,341,561,453,stop,5.36,
+resample,ghz4_layout,1,1,pass,1,341,473,365,stop,4.4,
+resample,ghz4_layout,2,1,pass,1,341,838,730,stop,7.77,
+resample,qft4,0,1,truncated,0,328,16000,16000,length,144.17,
+resample,qft4,0,2,truncated,0,328,16000,16000,length,154.96,
+resample,qft4,0,3,truncated,0,328,16000,15742,length,145.85,
+resample,qft4,1,1,truncated,0,328,16000,16000,length,143.94,
+resample,qft4,1,2,truncated,0,328,16000,16000,length,152.42,
+resample,qft4,1,3,truncated,0,328,16000,16000,length,139.97,
+resample,qft4,2,1,truncated,0,328,16000,16000,length,151.9,
+resample,qft4,2,2,api_error,0,0,0,,,0.42,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: ef426dd3-7e39-466e-8263-3c37d9e72d4f)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bell,0,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 6709da99-b037-416a-ab85-1a98bc94d0e6)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bell,1,1,api_error,0,0,0,,,0.42,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: fc587610-0079-4ce4-a8ed-9fa06eee3ae0)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bell,2,1,api_error,0,0,0,,,0.42,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 6fe482e4-d2c3-4ffc-a813-ad33570316e1)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz3,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 5213b831-dd46-438d-add0-44b55cde9d7e)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz3,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 6bee1124-7c06-4913-89cd-e7a5fc90f5f3)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz3,2,1,api_error,0,0,0,,,0.56,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: cf79d7d8-96a3-4aec-8f0f-c57ccfe3e9e6)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz4,0,1,api_error,0,0,0,,,0.39,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 91048418-c5ac-46f0-9a85-999fdb324976)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz4,1,1,api_error,0,0,0,,,0.42,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 0427ebad-169c-48f7-89a1-f5d32ef96e85)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz4,2,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: d97d69af-a2e1-4012-b02d-1b0190ecd1ec)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz5,0,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 0121fd36-7c5b-485f-9604-70a737aa0ddc)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz5,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 730bb396-7873-4ca4-9337-cadb3fe68284)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz5,2,1,api_error,0,0,0,,,0.42,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 1c0a1897-deb0-4e9a-a707-d4dc7a3c1b79)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz5_layout,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 362931e1-1bce-40ca-a56b-208d5b91ae1e)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz5_layout,1,1,api_error,0,0,0,,,0.42,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: e64fe1fc-668d-4670-a092-5f22bf5e9559)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz5_layout,2,1,api_error,0,0,0,,,0.44,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 0ff503bb-7a8b-41a0-a334-02372f3aa5f4)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,plus2,0,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 35c94779-1317-4d13-a8e0-5a2df6639179)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,plus2,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: adc55ee9-27ff-4228-8c95-fa7eb408ca01)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,plus2,2,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 915aa5e2-aee8-4c47-b74c-2266c1973ce4)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,uniform3,0,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 2a07cf83-7476-45b6-9b0d-96ddf5d2c196)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,uniform3,1,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: c57dffdd-1095-4ebd-9bce-7b0d45b579e9)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,uniform3,2,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 260211b6-3fe5-4ad4-a2b5-760e7d91e2dc)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,w3,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: e81eb369-38ca-40b8-a5c1-7b85a36eb7c5)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,w3,1,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 6cc0a0cc-0099-4c98-a284-bd6a343ee064)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,w3,2,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 059cdce2-5b73-42ca-aebd-a885ac0e56a5)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bitflip1,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 6b4d0bcb-ecd8-480f-be31-13fa604eb098)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bitflip1,1,1,api_error,0,0,0,,,0.44,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: ca3cd942-4fc7-445c-9538-ccf355d11028)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bitflip1,2,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 0cc2276c-17db-4350-9fbc-d2e430dcd915)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ry_quarter,0,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: b6171bb9-a0fb-4294-a3c7-ffb1bf68a843)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ry_quarter,1,1,api_error,0,0,0,,,0.67,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 41877276-8e8f-4bd4-8b4a-038079a5febf)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ry_quarter,2,1,api_error,0,0,0,,,0.42,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 8726bbe9-e02f-4500-90e1-be52c7f8d4b8)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,qft2,0,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 595786c6-5685-4e72-ac39-119a5fa05d0f)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,qft2,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: dd973b3d-696e-41cf-b7fe-5fe61cff347d)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,qft2,2,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 154d7ff1-d1b4-4522-ad8c-c5c0c8d48cce)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,minus1,0,1,api_error,0,0,0,,,0.43,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 413a5f0c-d7ae-4c36-b8eb-d76665a68835)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,minus1,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 998b0f49-5a97-4d34-a37b-96ca60168d00)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,minus1,2,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: a82d9b6d-a3b5-46d8-a326-2f3e1ae6a5ce)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,w4,0,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 49e24227-58ee-40d7-93d3-1ab31c009779)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,w4,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 42fd4f0a-913a-49d1-bde3-8912722dbc5f)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,w4,2,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 28638022-c89f-4cfc-9700-29cf253b46f9)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,qft3,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 414352e7-5de5-409f-ba54-a18b4db55064)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,qft3,1,1,api_error,0,0,0,,,0.42,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: f766f813-4323-463a-84cb-7ee967209b1c)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,qft3,2,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 7a928ff9-8041-42a9-a6fe-cff680231f1c)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz6,0,1,api_error,0,0,0,,,0.43,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: baf86843-b449-493d-8277-813bc0a7a18e)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz6,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 7141fe4f-9dea-4a31-a0b8-711703aaab90)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz6,2,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 12e4d3cd-de87-4bd2-9bba-928ee6572ead)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz8,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: a75d2ad4-9e18-4dfe-92ca-074795bc5d1f)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz8,1,1,api_error,0,0,0,,,0.43,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: d164507f-1b13-4820-833c-879626612338)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz8,2,1,api_error,0,0,0,,,0.45,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 9f8f90ac-c7d9-4ac9-a671-9874d96d7a3b)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,uniform4,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: dc9b5c3c-1d58-45ce-9beb-d47457655fe5)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,uniform4,1,1,api_error,0,0,0,,,0.6,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 2de0349a-594f-45ff-a55d-6a428a4e4287)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,uniform4,2,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 6fd1dc40-f1fd-4c9d-a929-76c0628967ee)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,plusi,0,1,api_error,0,0,0,,,0.39,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: a6154490-107d-4e95-968a-5bfe38490e85)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,plusi,1,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 5f584788-0dd7-44ce-ba7e-35bca696a224)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,plusi,2,1,api_error,0,0,0,,,0.42,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 30d420e9-ab14-431f-b136-b26f418b8f2f)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bell_minus,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 0c9272d9-bf91-4931-9245-f8fb05a13a5e)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bell_minus,1,1,api_error,0,0,0,,,0.43,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: e0854849-b816-489d-a3b2-10e016230901)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bell_minus,2,1,api_error,0,0,0,,,0.46,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: ec090889-110d-41b2-aeff-035bcd98dd2f)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bell_psi,0,1,api_error,0,0,0,,,0.39,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: b74976c5-3546-43b7-9354-2086c1ec0565)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bell_psi,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 5233b91f-c505-45ee-a27c-902b2f75e1d1)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,bell_psi,2,1,api_error,0,0,0,,,0.39,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: fe382d07-c695-48cb-b5f5-c5d98a5e1fb1)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,partial_ent,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 0df648ed-63d4-4d7b-b17e-94c4672085e7)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,partial_ent,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 8022760e-ea40-4e88-9893-ad39dfec31cd)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,partial_ent,2,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 7495b869-a3d3-4c04-88e5-b3f4d6a5f38b)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,cluster3,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: c5dff11e-1805-4997-b3bd-95f8ee6f44c7)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,cluster3,1,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: d6f934db-8b8d-437d-ab29-300011053224)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,cluster3,2,1,api_error,0,0,0,,,0.42,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: f3e33862-5e71-414e-9e3d-c2bddd395f8f)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz4_layout,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: f2465564-3aba-4bbe-abc9-54595e0de310)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz4_layout,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: fead0a22-bbc5-4384-95c3-ec710ec63947)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,ghz4_layout,2,1,api_error,0,0,0,,,0.46,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 6c1684cb-5e89-46ea-a080-f44a353cd31e)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,qft4,0,1,api_error,0,0,0,,,0.41,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 29f50c56-b5e5-44f5-a2e6-e9e2442e544f)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,qft4,1,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 38c007f0-7131-403e-bbfd-9203c9203e04)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"
+feedback,qft4,2,1,api_error,0,0,0,,,0.4,"APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: 2cb85e5d-4aa6-49d9-aefd-31a26eef4dd8)', 'type': 'insufficient_balance_error', 'param': None, 'code': 'invalid_request_error'}}"

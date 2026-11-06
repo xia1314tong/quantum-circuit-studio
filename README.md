@@ -111,6 +111,12 @@ cp deepseek_config.example.json deepseek_config.json
 实现见 `quantum_circuit_studio/thresholds.py`（约 100 行，不引入额外依赖），对应测试在 `tests/test_thresholds.py` 与 `tests/test_gui.py`。
 开启噪声仿真后，分析面板会多出一行提示：当前比特数对应的 p*(n)、以及当前噪声是否已越过 10% 偏差边界。模型推导与实验数据不在本仓库。
 
+## 实验代码
+
+`experiments/` 是本项目做定量验证用的脚本：噪声容限判据、误差缓解对照、以及 LLM 生成电路的三臂对照实验。运行 `python -m experiments.reproduce` 会把 CSV 结果与图重新生成到 `experiments/results/` 和 `experiments/figures/`。
+
+这部分不影响工具本身的使用，只是为了让文章里的数字可以从仓库复算出来。
+
 ## 项目结构
 
 ```text
@@ -131,6 +137,7 @@ quantum-circuit-studio/
 │       ├── assistant.py             # AI 助手对话与代码生成
 │       ├── exports.py               # CSV / 图片 / 报告 / 配置导入导出
 │       └── history.py               # 撤销重做栈与快捷键
+├── experiments/                     # 判据 / 缓解 / LLM 生成可靠性的实验脚本与结果
 ├── tests/                           # pytest：计算层 / 判据 / 算法 / 界面
 ├── docs/                            # 界面截图
 ├── requirements.txt

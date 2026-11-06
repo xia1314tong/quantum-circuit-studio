@@ -1,0 +1,2 @@
+arm_a,arm_b,pairs,rate_a,rate_b,delta,ci_low,ci_high,b_only,a_only,mcnemar_p
+resample,feedback,72,0.9167,0.9583,0.0417,0.0,0.0972,3,0,0.25

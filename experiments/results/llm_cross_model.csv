@@ -1,0 +1,7 @@
+model,arm,tasks,pairs,pass_at_1,final_pass,mean_rounds,total_tokens,delta_vs_resample,ci_low,ci_high,mcnemar_p,b_only,a_only,matched_pairs,rate_resample,rate_feedback
+deepseek-flash,resample,24,72,0.889,0.917,1.19,401614,,,,,,,,,
+deepseek-flash,feedback,24,72,0.903,0.958,1.14,310467,0.0417,0.0,0.0972,0.25,3,0,72,0.9167,0.9583
+deepseek-v4-pro,resample,24,72,0.792,0.806,1.4,799927,,,,,,,,,
+deepseek-v4-pro,feedback,24,72,0.806,0.903,1.35,709887,0.0972,0.0139,0.1806,0.0391,8,1,72,0.8056,0.9028
+qwen3.8-flash,resample,24,72,0.931,0.958,1.11,526740,,,,,,,,,
+qwen3.8-flash,feedback,24,70,0.986,0.986,1.0,392880,0.0,0.0,0.0,1.0,0,0,70,0.9857,0.9857
