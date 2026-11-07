@@ -6,6 +6,8 @@ import io
 import contextlib
 
 import pytest
+from PySide6.QtCore import QEvent, QPointF, Qt
+from PySide6.QtGui import QMouseEvent
 
 from quantum_circuit_studio.algorithm_lab import (
     deutsch_jozsa_code_body,
@@ -23,7 +25,32 @@ HEADER = "import pennylane as qml\nimport numpy as np\n"
 
 
 def make_canvas(num_wires: int = 4) -> CircuitCanvas:
-    return CircuitCanvas(num_wires, lambda *a, **k: None, lambda *a, **k: None)
+    canvas = CircuitCanvas(lambda *a, **k: None, lambda *a, **k: None, lambda *a, **k: None)
+    canvas.set_wire_count(num_wires)
+    return canvas
+
+
+def mouse_event(kind, x, y, buttons, button=Qt.MouseButton.LeftButton):
+    return QMouseEvent(
+        kind,
+        QPointF(float(x), float(y)),
+        button,
+        buttons,
+        Qt.KeyboardModifier.NoModifier,
+    )
+
+
+def drag_gate(canvas, gate_index, start, end):
+    """模拟一次完整拖动：按下 → 移动 → 松开。"""
+    gate = canvas.gates[gate_index]
+    canvas.mousePressEvent(mouse_event(QEvent.Type.MouseButtonPress, *start,
+                                      Qt.MouseButton.LeftButton))
+    # 按下后确认抓住了正确的一端
+    canvas.mouseMoveEvent(mouse_event(QEvent.Type.MouseMove, *end,
+                                      Qt.MouseButton.LeftButton))
+    canvas.mouseReleaseEvent(mouse_event(QEvent.Type.MouseButtonRelease, *end,
+                                         Qt.MouseButton.NoButton))
+    return gate
 
 
 def run_body(body: str) -> str:
@@ -35,21 +62,40 @@ def run_body(body: str) -> str:
 
 
 # ---------------------------------------------------------------- 1. CNOT 拖动
-def test_cnot_drag_keeps_endpoints_when_moving_horizontally():
+def test_canvas_really_has_requested_wires():
     canvas = make_canvas(4)
-    gate = {"name": "CNOT", "control": 0, "target": 3, "col": 2}
-    # 同一条线路上横向拖动：连接保持不变
-    assert canvas.cnot_drag_endpoints(gate, 0) == (0, 3)
+    assert canvas.num_wires == 4
 
 
-def test_cnot_drag_shifts_pair_or_refuses_out_of_range():
+def test_cnot_drag_from_control_keeps_connection():
     canvas = make_canvas(4)
-    gate = {"name": "CNOT", "control": 0, "target": 3, "col": 2}
-    # 拖到 q0 之外没有余量（target 会到 4），拒绝纵向移动
-    assert canvas.cnot_drag_endpoints(gate, 1) == (0, 3)
+    canvas.gates = [{"name": "CNOT", "control": 0, "target": 3, "col": 2}]
+    start = (canvas.col_x(2), canvas.wire_y(0))
+    end = (canvas.col_x(3), canvas.wire_y(0))
+    gate = drag_gate(canvas, 0, start, end)
+    assert (gate["control"], gate["target"]) == (0, 3)
+    assert gate["col"] == 3
+
+
+def test_cnot_drag_from_target_keeps_connection():
+    canvas = make_canvas(4)
+    canvas.gates = [{"name": "CNOT", "control": 1, "target": 2, "col": 1}]
+    start = (canvas.col_x(1), canvas.wire_y(2))
+    end = (canvas.col_x(2), canvas.wire_y(2))
+    gate = drag_gate(canvas, 0, start, end)
+    assert (gate["control"], gate["target"]) == (1, 2), "从目标端横拖不应改变连接"
+    assert gate["col"] == 2
+
+
+def test_cnot_drag_refuses_out_of_range_vertical_move():
+    canvas = make_canvas(4)
+    canvas.gates = [{"name": "CNOT", "control": 0, "target": 3, "col": 2}]
+    start = (canvas.col_x(2), canvas.wire_y(0))
+    end = (canvas.col_x(2), canvas.wire_y(1))
+    gate = drag_gate(canvas, 0, start, end)
+    assert (gate["control"], gate["target"]) == (0, 3)
 
     neighbour = {"name": "CNOT", "control": 1, "target": 2, "col": 1}
-    # 相邻比特的 CNOT 可以整体上移，相对位置不变
     assert canvas.cnot_drag_endpoints(neighbour, 0) == (0, 1)
 
 
@@ -138,6 +184,13 @@ def test_pair_stats_reversal_flips_interval_and_counts():
     assert flipped["ci_high"] == "-0.0100"
     assert flipped["b_only"] == "1"
     assert flipped["a_only"] == "4"
+
+
+def test_negate_keeps_scientific_notation():
+    assert cross._negate("1e-4") == "-1e-4"
+    assert cross._negate("-1e-4") == "1e-4"
+    assert cross._negate("2.5E-3") == "-2.5E-3"
+    assert cross._negate("0.0500") == "-0.0500"
 
 
 # ------------------------------------------------------ 7. ZNE 不静默截断

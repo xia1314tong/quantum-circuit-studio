@@ -62,7 +62,10 @@ def _negate(value):
         number = float(value)
     except (TypeError, ValueError):
         return value
-    text = str(value)
+    text = str(value).strip()
+    if "e" in text.lower():
+        # 科学记数法原样保留位数，只翻转符号
+        return text[1:] if text.startswith("-") else "-" + text
     if "." in text:
         decimals = len(text.split(".")[1])
         return f"{-number:.{decimals}f}"
