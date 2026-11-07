@@ -101,6 +101,19 @@ def build_table(entries: Sequence[tuple], arm_a: str = "resample", arm_b: str = 
     return out
 
 
+def holm_adjust(pvalues: Sequence[float]) -> List[float]:
+    """Holm–Bonferroni 校正：同一族假设（这里是三个模型的同一比较）一起校正。"""
+    m = len(pvalues)
+    order = sorted(range(m), key=lambda index: pvalues[index])
+    adjusted = [0.0] * m
+    running = 0.0
+    for rank, index in enumerate(order):
+        value = min(1.0, (m - rank) * pvalues[index])
+        running = max(running, value)
+        adjusted[index] = running
+    return adjusted
+
+
 def write_csv(path: str, rows: Sequence[dict]) -> str:
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     fields: List[str] = []
@@ -140,12 +153,27 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         raise SystemExit("至少给一个 --model")
 
     table = build_table(entries, options.arm_a, options.arm_b)
+    # 三个模型做的是同一个比较，p 值应作族错误率校正后再解读
+    family = [row for row in table if row["arm"] == options.arm_b and row.get("mcnemar_p")]
+    pvalues = []
+    for row in family:
+        try:
+            pvalues.append(float(row["mcnemar_p"]))
+        except (TypeError, ValueError):
+            pvalues.append(1.0)
+    for row, adjusted in zip(family, holm_adjust(pvalues)):
+        row["p_holm"] = f"{adjusted:.6f}"
     path = write_csv(os.path.join(RESULTS_DIR, options.out), table)
     print(f"[ok] {os.path.relpath(path)}")
     for row in table:
         print(
             f"{row['model']:18s} {row['arm']:9s} pass@1={row['pass_at_1']:.3f} "
             f"final={row['final_pass']:.3f} rounds={row['mean_rounds']:.2f} tokens={row['total_tokens']}"
+        )
+    for row in family:
+        print(
+            f"[holm] {row['model']:18s} p={row.get('mcnemar_p', '')} "
+            f"→ p_holm={row.get('p_holm', '')}"
         )
     return 0
 

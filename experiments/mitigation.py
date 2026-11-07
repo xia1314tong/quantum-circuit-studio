@@ -63,6 +63,8 @@ def mitigate_raw(measured: np.ndarray, matrix: np.ndarray) -> np.ndarray:
     """消融对照：只做最小二乘反演，不加单纯形约束。
 
     噪声较大时解会出现负分量、也不再归一，这正说明约束不是"美化"而是必需的。
+    TVD 仍需要一个合法分布，故调用方会先裁零再归一——该流程在表中记作
+    "反演＋裁零归一化"，与"反演＋单纯形投影"对照。
     """
     solution, *_ = np.linalg.lstsq(matrix, measured, rcond=None)
     return np.asarray(solution, dtype=float)
@@ -72,13 +74,25 @@ def zne_support_mass(
     num_wires: int,
     p: float,
     scale_factors: Sequence[float] = (1.0, 2.0, 3.0),
+    shots: int | None = None,
+    seed: int | None = None,
 ) -> float:
-    """零噪声外推：放大噪声后对支撑质量做线性外推到 c=0。"""
+    """零噪声外推：按倍率放大噪声，对支撑质量做线性外推到 c=0。
+
+    ``shots`` 给定时，**每个倍率各做一次同样次数的采样**（与其他方法共用同一
+    射击预算，避免"用精确分布对比采样结果"）；``None`` 时用精确分布，仅作解析
+    参照，不应与采样结果放进同一张表。
+    """
+    rng = np.random.default_rng(seed)
     masses = []
     for scale in scale_factors:
         scaled_p = min(p * scale, 0.5)
         distribution = ghz_distribution(num_wires, scaled_p)
-        masses.append(float(distribution[0] + distribution[-1]))
+        if shots is not None:
+            sampled = rng.multinomial(int(shots), distribution) / float(shots)
+            masses.append(float(sampled[0] + sampled[-1]))
+        else:
+            masses.append(float(distribution[0] + distribution[-1]))
     coefficients = np.polyfit(
         np.asarray(scale_factors, dtype=float), np.asarray(masses), deg=1
     )
@@ -144,7 +158,13 @@ def evaluate(
     readout = mitigate(measured, readout_confusion_matrix(num_wires))
     results["readout"] = float(np.sum(np.abs(ideal - readout)) / 2)
 
-    results["zne"] = float(np.clip(1.0 - zne_support_mass(num_wires, p), 0.0, 1.0))
+    results["zne"] = float(
+        np.clip(
+            1.0 - zne_support_mass(num_wires, p, shots=shots, seed=None if seed is None else seed + 1),
+            0.0,
+            1.0,
+        )
+    )
 
     estimated_p = float(np.clip(p * (1.0 + model_error), 0.0, 0.5))
     assumed = mitigate(measured, channel_matrix(num_wires, estimated_p))
@@ -154,12 +174,12 @@ def evaluate(
     fitted = mitigate(measured, channel_matrix(num_wires, fitted_p))
     results["model_est"] = float(np.sum(np.abs(ideal - fitted)) / 2)
 
-    # 消融：同样反演，但不加单纯形约束（负分量裁零后重新归一）
+    # 消融：同样反演，但不做单纯形投影——负分量裁零后重新归一（"反演＋裁零归一化"）
     raw = mitigate_raw(measured, channel_matrix(num_wires, estimated_p))
     clipped = np.clip(raw, 0.0, None)
     total = float(clipped.sum())
     normalised = clipped / total if total > 0 else clipped
-    results["model_raw"] = float(np.sum(np.abs(ideal - normalised)) / 2)
-    results["model_raw_negative_mass"] = float(-np.clip(raw, None, 0.0).sum())
+    results["model_clip"] = float(np.sum(np.abs(ideal - normalised)) / 2)
+    results["model_clip_negative_mass"] = float(-np.clip(raw, None, 0.0).sum())
 
     return results

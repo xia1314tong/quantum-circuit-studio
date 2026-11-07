@@ -196,21 +196,21 @@ def run_ablation() -> str:
     shots, seeds = 20000, 8
     for num_wires in (4, 6, 8):
         for p in (0.05, 0.10, 0.15, 0.20, 0.30, 0.40):
-            constrained, unconstrained, negative, fitted = [], [], [], []
+            constrained, clipped, negative, fitted = [], [], [], []
             for seed in range(seeds):
                 results = mitigation.evaluate(
                     num_wires, float(p), shots=shots, seed=seed
                 )
                 constrained.append(results["model"])
-                unconstrained.append(results["model_raw"])
-                negative.append(results["model_raw_negative_mass"])
+                clipped.append(results["model_clip"])
+                negative.append(results["model_clip_negative_mass"])
                 fitted.append(results["model_est"])
             rows.append(
                 [
                     num_wires,
                     f"{p:.3f}",
                     f"{np.mean(constrained):.8f}",
-                    f"{np.mean(unconstrained):.8f}",
+                    f"{np.mean(clipped):.8f}",
                     f"{np.mean(negative):.8f}",
                     f"{np.mean(fitted):.8f}",
                 ]
@@ -220,9 +220,9 @@ def run_ablation() -> str:
         [
             "num_wires",
             "p",
-            "tvd_model_constrained",
-            "tvd_model_unconstrained",
-            "negative_mass_unconstrained",
+            "tvd_model_projected",
+            "tvd_model_clipped",
+            "negative_mass_clipped",
             "tvd_model_fitted_p",
         ],
         rows,

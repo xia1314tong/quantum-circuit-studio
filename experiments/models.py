@@ -113,9 +113,19 @@ def ideal_ghz_distribution(num_wires: int) -> np.ndarray:
 
 
 def support_mass(num_wires: int, p: float) -> float:
-    """理想支撑集 {0..0, 1..1} 上的概率质量，等于 1 - TVD。"""
-    noisy = ghz_distribution(num_wires, p)
-    return float(noisy[0] + noisy[-1])
+    """理想支撑集 {0..0, 1..1} 上的概率质量，等于 1 - TVD。
+
+    GHZ 分布满足 ``P(s) = ½[z(s) + z(s ⊕ 11…1)]``，两个支撑点的质量之和
+    恰为 ``z(00…0) + z(11…1)``，只需两次 O(n) 的 DP，整体 O(n)。
+    早期版本按完整 2^n 分布求和，n 大时会退化成 O(n·2^n)，与此处声明不符。
+    """
+    if num_wires < 1:
+        return 1.0
+    all_ones = (1 << num_wires) - 1
+    return float(
+        flip_pattern_probability(num_wires, p, 0)
+        + flip_pattern_probability(num_wires, p, all_ones)
+    )
 
 
 def ghz_tvd(num_wires: int, p: float) -> float:

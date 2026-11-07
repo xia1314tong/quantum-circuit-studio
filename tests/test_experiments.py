@@ -171,11 +171,34 @@ def test_qiskit_crosscheck_agrees():
             assert np.max(np.abs(ours - theirs)) < 1e-12
 
 def test_simplex_constraint_matters_under_sampling_noise():
-    """有限次测量下，不加单纯形约束会让反演出现负概率、误差显著变大。"""
+    """有限次测量下，裁零归一化的反演仍有负质量、误差显著变大。"""
     results = mitigation.evaluate(8, 0.10, shots=20000, seed=1)
-    assert results["model_raw_negative_mass"] > 0.05
-    assert results["model_raw"] > 3 * results["model"]
+    assert results["model_clip_negative_mass"] > 0.05
+    assert results["model_clip"] > 3 * results["model"]
     assert results["model"] < 0.05
+
+
+def test_support_mass_matches_full_distribution():
+    """O(n) 的两点 DP 与按完整分布求和给出同一个数。"""
+    for num_wires in (2, 3, 5, 7):
+        for p in (0.02, 0.1, 0.3):
+            noisy = models.ghz_distribution(num_wires, p)
+            assert models.support_mass(num_wires, p) == pytest.approx(
+                float(noisy[0] + noisy[-1]), abs=1e-15
+            )
+            assert models.ghz_tvd(num_wires, p) == pytest.approx(
+                models.tvd(models.ideal_ghz_distribution(num_wires), noisy), abs=1e-12
+            )
+
+
+def test_zne_uses_sampling_when_shots_given():
+    """给 shots 后 ZNE 每个倍率都重新采样：同一 p 下不同种子结果不同但落在合理范围。"""
+    values = {
+        mitigation.zne_support_mass(6, 0.1, shots=2000, seed=seed) for seed in range(5)
+    }
+    assert len(values) > 1
+    for value in values:
+        assert 0.0 <= value <= 1.0
 
 def test_llm_validator_layers():
     """三层校验各自能拦下对应类型的错误。"""

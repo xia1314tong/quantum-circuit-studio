@@ -186,13 +186,22 @@ class SimulationResult:
         return tv_distance(self.noisy_probs, self.noisy_frequencies)
 
     @property
-    def fidelity(self) -> float:
-        """理想态与含噪态的保真度；未启用噪声时为 1。"""
+    def distribution_fidelity(self) -> float:
+        """计算基概率分布的保真度（Bhattacharyya 系数的平方）；未启用噪声时为 1。
+
+        注意：这不是量子态保真度。它只比较 |振幅|² 构成的分布，因此**对相位
+        错误完全不敏感**——例如相位翻转后真实态保真度约 0.5，这里仍返回 1.0。
+        要判断相位或纠缠是否正确，需要比较密度矩阵，本模块不做这件事。
+        """
         if self.noisy_probs is None:
             return 1.0
-        # 概率分布相同的纯态之间，保真度的下界用 Hellinger 形式衡量
         overlap = float(np.sum(np.sqrt(self.ideal_probs * self.noisy_probs)))
         return overlap ** 2
+
+    @property
+    def fidelity(self) -> float:
+        """向后兼容别名，等价于 ``distribution_fidelity``。"""
+        return self.distribution_fidelity
 
 
 def simulate_circuit(

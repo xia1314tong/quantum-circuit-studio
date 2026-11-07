@@ -149,6 +149,31 @@ def test_noise_disabled_skips_mixed_device():
     assert result.fidelity == 1.0
 
 
+def test_distribution_fidelity_is_blind_to_phase_errors():
+    """已知局限：分布保真度只比较计算基概率，相位翻转下仍报 1。"""
+    result = engine.simulate_circuit(
+        2,
+        bell_gates(),
+        shots=200,
+        noise_enabled=True,
+        noise_model="phaseflip",
+        noise_probability=0.2,
+    )
+    assert result.distribution_fidelity == pytest.approx(1.0, abs=1e-9)
+    assert result.ideal_noisy_distance == pytest.approx(0.0, abs=1e-9)
+    # 同一指标在比特翻转下会明显下降，说明它衡量的是"分布"而不是"态"
+    bitflip = engine.simulate_circuit(
+        2,
+        bell_gates(),
+        shots=200,
+        noise_enabled=True,
+        noise_model="bitflip",
+        noise_probability=0.2,
+    )
+    assert bitflip.distribution_fidelity < 0.95
+    assert bitflip.ideal_noisy_distance > 0.2
+
+
 # --------------------------------------------------------------------------
 # 3. 采样与指标
 # --------------------------------------------------------------------------
