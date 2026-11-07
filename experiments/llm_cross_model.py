@@ -56,6 +56,19 @@ def aggregate(summary_rows: Sequence[dict]) -> Dict[str, dict]:
     return table
 
 
+def _negate(value):
+    """把数值（或 CSV 里的数字字符串）取负，保留原有小数位。"""
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return value
+    text = str(value)
+    if "." in text:
+        decimals = len(text.split(".")[1])
+        return f"{-number:.{decimals}f}"
+    return str(-int(number))
+
+
 def pair_stats(arms_rows: Sequence[dict], arm_a: str, arm_b: str) -> Optional[dict]:
     for row in arms_rows:
         if row.get("arm_a") == arm_a and row.get("arm_b") == arm_b:
@@ -66,9 +79,13 @@ def pair_stats(arms_rows: Sequence[dict], arm_a: str, arm_b: str) -> Optional[di
             flipped["arm_b"] = row.get("arm_a", arm_a)
             flipped["rate_a"] = row.get("rate_b", "")
             flipped["rate_b"] = row.get("rate_a", "")
-            delta = row.get("delta", "")
-            if isinstance(delta, str) and delta:
-                flipped["delta"] = delta[1:] if delta.startswith("-") else "-" + delta
+            flipped["delta"] = _negate(row.get("delta", ""))
+            # 方向反过来后，置信区间要整体取负并交换端点，不一致计数也要换位
+            old_low, old_high = row.get("ci_low", ""), row.get("ci_high", "")
+            flipped["ci_low"] = _negate(old_high)
+            flipped["ci_high"] = _negate(old_low)
+            flipped["b_only"] = row.get("a_only", "")
+            flipped["a_only"] = row.get("b_only", "")
             return flipped
     return None
 

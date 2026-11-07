@@ -77,25 +77,33 @@ def zne_support_mass(
     shots: int | None = None,
     seed: int | None = None,
 ) -> float:
-    """零噪声外推：按倍率放大噪声，对支撑质量做线性外推到 c=0。
+    """零噪声外推：按倍率放大噪声，对支撑质量做线性外推到 p=0。
+
+    横坐标用**实际**噪声强度 ``p * scale``（不截断到 0.5），因此倍率越大
+    噪声越强这一前提成立；``p * max(scale_factors) > 1`` 时直接报错。
 
     ``shots`` 给定时，**每个倍率各做一次同样次数的采样**（与其他方法共用同一
     射击预算，避免"用精确分布对比采样结果"）；``None`` 时用精确分布，仅作解析
     参照，不应与采样结果放进同一张表。
     """
     rng = np.random.default_rng(seed)
+    effective = [float(p) * float(scale) for scale in scale_factors]
+    if max(effective) > 1.0:
+        raise ValueError(
+            f"ZNE 倍率会把噪声参数推到 {max(effective):.2f}（>1），请降低 p 或倍率"
+        )
+    if max(effective) == 0.0:
+        # p=0 时三个倍率落在同一点，线性拟合退化；此时支撑质量就是 1
+        return 1.0
     masses = []
-    for scale in scale_factors:
-        scaled_p = min(p * scale, 0.5)
+    for scaled_p in effective:
         distribution = ghz_distribution(num_wires, scaled_p)
         if shots is not None:
             sampled = rng.multinomial(int(shots), distribution) / float(shots)
             masses.append(float(sampled[0] + sampled[-1]))
         else:
             masses.append(float(distribution[0] + distribution[-1]))
-    coefficients = np.polyfit(
-        np.asarray(scale_factors, dtype=float), np.asarray(masses), deg=1
-    )
+    coefficients = np.polyfit(np.asarray(effective, dtype=float), np.asarray(masses), deg=1)
     return float(np.clip(np.polyval(coefficients, 0.0), 0.0, 1.0))
 
 
@@ -158,13 +166,19 @@ def evaluate(
     readout = mitigate(measured, readout_confusion_matrix(num_wires))
     results["readout"] = float(np.sum(np.abs(ideal - readout)) / 2)
 
-    results["zne"] = float(
-        np.clip(
-            1.0 - zne_support_mass(num_wires, p, shots=shots, seed=None if seed is None else seed + 1),
-            0.0,
-            1.0,
+    # ZNE 的三个倍率要求 3p ≤ 1；超出范围时该方法无定义，记为 NaN 而不是硬失败
+    if 3.0 * float(p) > 1.0:
+        results["zne"] = float("nan")
+    else:
+        results["zne"] = float(
+            np.clip(
+                1.0 - zne_support_mass(
+                    num_wires, p, shots=shots, seed=None if seed is None else seed + 1
+                ),
+                0.0,
+                1.0,
+            )
         )
-    )
 
     estimated_p = float(np.clip(p * (1.0 + model_error), 0.0, 0.5))
     assumed = mitigate(measured, channel_matrix(num_wires, estimated_p))

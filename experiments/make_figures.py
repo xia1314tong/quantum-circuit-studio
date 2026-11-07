@@ -317,15 +317,25 @@ def fig6_cross_model() -> None:
     palette = {"resample": "#E8A33D", "feedback": "#2F6DB3"}
     xs = np.arange(len(models))
     width = 0.8 / max(len(arms), 1)
+    matched = True
     for index, arm in enumerate(arms):
-        values = [float(lookup[(model, arm)]["final_pass"]) for model in models]
+        values = []
+        for model in models:
+            pair_row = lookup.get((model, "feedback"), {})
+            key = "rate_resample" if arm == "resample" else "rate_feedback"
+            raw = pair_row.get(key, "")
+            if raw in ("", None):
+                matched = False
+                values.append(float(lookup[(model, arm)]["final_pass"]))
+            else:
+                values.append(float(raw))
         axes[0].bar(xs + (index - (len(arms) - 1) / 2) * width, values, width,
                     label=arm, color=palette.get(arm, "#8C8C8C"))
     axes[0].set_xticks(xs)
     axes[0].set_xticklabels([model.replace("deepseek-", "") for model in models], fontsize=7)
     axes[0].set_ylim(0.6, 1.03)
-    axes[0].set_ylabel("final success rate")
-    axes[0].set_title("(a) success after k=3")
+    axes[0].set_ylabel("success rate (matched pairs)" if matched else "final success rate")
+    axes[0].set_title("(a) success on matched pairs" if matched else "(a) success after k=3")
     axes[0].legend(frameon=False, fontsize=7)
 
     deltas, lows, highs, pvalues = [], [], [], []

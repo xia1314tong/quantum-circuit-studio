@@ -501,6 +501,20 @@ class CircuitCanvas(QWidget):
 
         super().mousePressEvent(event)
 
+    def cnot_drag_endpoints(self, gate, wire):
+        """拖动 CNOT 时保持两个端点的相对位置。
+
+        拖到同一条线路（横移）只改变列，连接不变；拖到别的线路时两端整体平移，
+        平移后任一端点越界则拒绝这次纵向移动，避免悄悄换掉目标比特。
+        """
+        control = int(gate["control"])
+        target = int(gate["target"])
+        relative = target - control
+        candidate = int(wire) + relative
+        if 0 <= candidate < self.num_wires and candidate != int(wire):
+            return int(wire), candidate
+        return control, target
+
     # 移动量子门
     def mouseMoveEvent(self, event):
 
@@ -515,18 +529,14 @@ class CircuitCanvas(QWidget):
 
             gate = self.gates[self.dragging]
 
-            # 先计算新的位置
+            # 先计算新的位置：CNOT 整体平移，横移只改列、不改连接
             if gate["name"] == "CNOT":
 
-                target = (
-                    wire + 1
-                    if wire + 1 < self.num_wires
-                    else wire - 1
-                )
+                control, target = self.cnot_drag_endpoints(gate, wire)
 
                 changed = (
                         gate["col"] != col
-                        or gate["control"] != wire
+                        or gate["control"] != control
                         or gate["target"] != target
                 )
 
@@ -552,7 +562,7 @@ class CircuitCanvas(QWidget):
 
             if gate["name"] == "CNOT":
 
-                gate["control"] = wire
+                gate["control"] = control
                 gate["target"] = target
 
             else:

@@ -35,7 +35,21 @@ def _ghz_gates(num_wires: int) -> List[dict]:
     return gates
 
 
-def _layout_ghz_columns() -> Callable[[List[dict]], List[str]]:
+def _layout_ghz_columns(
+    num_wires: int,
+    controls: Sequence[int] | None = None,
+) -> Callable[[List[dict]], List[str]]:
+    """构造 GHZ 布局校验：H 在第 0 列，CNOT 的列、控制位、目标位都要吻合。
+
+    ``controls`` 给出第 i 个 CNOT 的控制位（默认全为 q0）；目标位固定是第 i+1 个
+    比特，列固定是第 i+1 列（i 从 0 起）。
+    """
+    expected_controls = list(controls) if controls is not None else [0] * (num_wires - 1)
+    expected = [
+        (int(expected_controls[i]), i + 1, i + 1)
+        for i in range(num_wires - 1)
+    ]
+
     def check(gates: List[dict]) -> List[str]:
         errors: List[str] = []
         hadamard_columns = [
@@ -47,6 +61,22 @@ def _layout_ghz_columns() -> Callable[[List[dict]], List[str]]:
             errors.append("缺少作用在 q0 上的 H 门")
         elif hadamard_columns[0] != 0:
             errors.append(f"q0 上的 H 门必须放在第 0 列，实际在第 {hadamard_columns[0]} 列")
+
+        actual = [
+            (int(g.get("control", -1)), int(g.get("target", -1)), int(g.get("col", 0)))
+            for g in gates
+            if g["name"] == "CNOT"
+        ]
+        for control, target, col in expected:
+            if (control, target, col) not in actual:
+                errors.append(
+                    f"缺少第 {col} 列的 CNOT(control=q{control}, target=q{target})"
+                )
+        for control, target, col in actual:
+            if (control, target, col) not in expected:
+                errors.append(
+                    f"不应出现 CNOT(control=q{control}, target=q{target}, col={col})"
+                )
         return errors
 
     return check
@@ -127,7 +157,7 @@ TASKS: List[Task] = [
         ),
         num_wires=5,
         gates=_ghz_gates(5),
-        layout=_layout_ghz_columns(),
+        layout=_layout_ghz_columns(5),
         tags=["规模", "约束"],
     ),
     Task(
@@ -283,7 +313,7 @@ TASKS: List[Task] = [
         ),
         num_wires=4,
         gates=_ghz_gates(4),
-        layout=_layout_ghz_columns(),
+        layout=_layout_ghz_columns(4, controls=[0, 1, 2]),
         tags=["语义", "布局约束"],
     ),
     Task(

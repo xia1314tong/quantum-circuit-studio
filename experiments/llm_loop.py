@@ -454,6 +454,18 @@ def run_task(
 # --------------------------------------------------------------------------
 # 汇总与入口
 # --------------------------------------------------------------------------
+def as_bool(value) -> bool:
+    """CSV 读回的值可能是字符串，'0' / 'false' 不能被当成真。"""
+    if isinstance(value, str):
+        text = value.strip().lower()
+        if text in {"", "0", "false", "no"}:
+            return False
+        if text in {"1", "true", "yes"}:
+            return True
+        return bool(text)
+    return bool(value)
+
+
 def summarise(rows: List[dict]) -> List[dict]:
     by_group: Dict[tuple, List[dict]] = {}
     for row in rows:
@@ -467,8 +479,8 @@ def summarise(rows: List[dict]) -> List[dict]:
             attempt = [row for row in task_rows if str(row["rep"]) == rep]
             if not attempt:
                 continue
-            one_shot.append(int(attempt[0]["passed"]))
-            repaired.append(int(any(row["passed"] for row in attempt)))
+            one_shot.append(int(as_bool(attempt[0]["passed"])))
+            repaired.append(int(any(as_bool(row["passed"]) for row in attempt)))
             rounds_used.append(len(attempt))
             tokens += sum(
                 int(row["prompt_tokens"]) + int(row["completion_tokens"]) for row in attempt
@@ -494,7 +506,7 @@ def _per_pair(rows: List[dict]) -> Dict[str, Dict[tuple, int]]:
         arm = row.get("arm", "feedback")
         key = (row["task"], str(row["rep"]))
         pairs.setdefault(arm, {})
-        pairs[arm][key] = max(pairs[arm].get(key, 0), int(row["passed"]))
+        pairs[arm][key] = max(pairs[arm].get(key, 0), int(as_bool(row["passed"])))
     return pairs
 
 
@@ -685,7 +697,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 last = attempt[-1]
                 print(
                     f"[{arm}][{task.key} rep{rep}] rounds={len(attempt)} "
-                    f"passed={bool(last['passed'])} layer={last['layer']}",
+                    f"passed={as_bool(last['passed'])} layer={last['layer']}",
                     flush=True,
                 )
                 _write_csv(runs_path, rows, fields)
@@ -718,7 +730,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 last = attempt[-1]
                 print(
                     f"[repair][{arm}][{task_key} rep{rep}] rounds={len(attempt)} "
-                    f"passed={bool(last['passed'])} layer={last['layer']}",
+                    f"passed={as_bool(last['passed'])} layer={last['layer']}",
                     flush=True,
                 )
                 _write_csv(runs_path, rows, fields)

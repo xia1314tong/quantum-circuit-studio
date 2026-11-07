@@ -15,6 +15,24 @@ from PySide6.QtWidgets import (
 )
 
 
+def grover_code_body(n, target, rounds, shots):
+    """Grover 导出代码：多控 Z 标记目标态，扩散算子取 H 共轭。"""
+    return f'''\nn = {n}\ntarget = "{target}"\nrounds = {rounds}\nshots = {shots}\ndev = qml.device("default.qubit", wires=n, shots=shots)\n\ndef oracle():\n    # 对目标计算基态施加 -1 相位：X 把目标映射到全 1，再用多控 Z 标记\n    for wire, bit in enumerate(target):\n        if bit == "0": qml.PauliX(wires=wire)\n    if n == 1: qml.PauliZ(wires=0)\n    else: qml.ctrl(qml.PauliZ, control=list(range(n-1)))(wires=n-1)\n    for wire, bit in enumerate(target):\n        if bit == "0": qml.PauliX(wires=wire)\n\ndef diffusion():\n    for w in range(n): qml.Hadamard(wires=w)\n    for w in range(n): qml.PauliX(wires=w)\n    if n == 1: qml.PauliZ(wires=0)\n    else: qml.ctrl(qml.PauliZ, control=list(range(n-1)))(wires=n-1)\n    for w in range(n): qml.PauliX(wires=w)\n    for w in range(n): qml.Hadamard(wires=w)\n\n@qml.qnode(dev)\ndef circuit():\n    for w in range(n): qml.Hadamard(wires=w)\n    for _ in range(rounds):\n        oracle(); diffusion()\n    return qml.sample(wires=range(n))\n\nsamples = circuit()\nstrings = ["".join(str(int(bit)) for bit in row) for row in np.atleast_2d(samples)]\nfrom collections import Counter\ncounts = Counter(strings)\nprint("counts:", counts)\nprint("target frequency:", counts.get(target, 0) / shots)\n'''
+
+
+def deutsch_jozsa_code_body(n, balanced, shots):
+    """Deutsch–Jozsa 导出代码：常数函数不翻转相位，平衡函数才施加 Z。"""
+    if balanced:
+        comment = "    # 平衡函数 f(x)=最低位：相位翻转等价于 Z 作用在最低位"
+        oracle = "    qml.PauliZ(wires=n-1)"
+        label = "balanced"
+    else:
+        comment = "    # 常数函数 f(x)=0：不做任何相位翻转"
+        oracle = "    pass"
+        label = "constant"
+    return f'''\nn = {n}\nshots = {shots}\ndev = qml.device("default.qubit", wires=n, shots=shots)\n\n@qml.qnode(dev)\ndef circuit():\n{comment}\n    for w in range(n): qml.Hadamard(wires=w)\n{oracle}\n    for w in range(n): qml.Hadamard(wires=w)\n    return qml.sample(wires=range(n))\n\nsamples = circuit()\nstrings = ["".join(str(int(bit)) for bit in row) for row in np.atleast_2d(samples)]\nprint("measurement counts:", __import__("collections").Counter(strings))\nprint("function type:", "{label}")\nprint("Interpretation: all-zero means constant; nonzero means balanced (promise problem).")\n'''
+
+
 class AlgorithmLabDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -225,9 +243,10 @@ class AlgorithmLabDialog(QDialog):
         if algo == 0:
             theta = math.asin(1/math.sqrt(2**n)); auto = max(0, round(math.pi/(4*theta)-0.5))
             r = auto if rounds == 0 else rounds
-            body = f'''\nn = {n}\ntarget = "{target}"\nrounds = {r}\nshots = {shots}\ndev = qml.device("default.qubit", wires=n, shots=shots)\n\ndef oracle():\n    # 对目标计算基态施加 -1 相位：X 将目标映射到全 1，再以多控 Z 标记\n    for wire, bit in enumerate(target):\n        if bit == "0": qml.PauliX(wires=wire)\n    if n == 1: qml.PauliZ(wires=0)\n    else: qml.ctrl(qml.PauliX, control=list(range(n-1)))(wires=n-1)\n    for wire, bit in enumerate(target):\n        if bit == "0": qml.PauliX(wires=wire)\n\ndef diffusion():\n    for w in range(n): qml.Hadamard(wires=w)\n    for w in range(n): qml.PauliX(wires=w)\n    if n == 1: qml.PauliZ(wires=0)\n    else: qml.ctrl(qml.PauliX, control=list(range(n-1)))(wires=n-1)\n    for w in range(n): qml.PauliX(wires=w)\n    for w in range(n): qml.Hadamard(wires=w)\n\n@qml.qnode(dev)\ndef circuit():\n    for w in range(n): qml.Hadamard(wires=w)\n    for _ in range(rounds):\n        oracle(); diffusion()\n    return qml.sample(wires=range(n))\n\nsamples = circuit()\nstrings = ["".join(str(int(bit)) for bit in row) for row in np.atleast_2d(samples)]\nfrom collections import Counter\ncounts = Counter(strings)\nprint("counts:", counts)\nprint("target frequency:", counts.get(target, 0) / shots)\n'''
+            body = grover_code_body(n, target, r, shots)
         elif algo == 1:
-            body = f'''\nn = {n}\nshots = {shots}\ndev = qml.device("default.qubit", wires=n, shots=shots)\n\n@qml.qnode(dev)\ndef circuit():\n    # Deutsch–Jozsa 平衡 Oracle f(x)=最低位：相位翻转等价于 Z 作用在最低位\n    for w in range(n): qml.Hadamard(wires=w)\n    qml.PauliZ(wires=n-1)\n    for w in range(n): qml.Hadamard(wires=w)\n    return qml.sample(wires=range(n))\n\nsamples = circuit()\nstrings = ["".join(str(int(bit)) for bit in row) for row in np.atleast_2d(samples)]\nprint("measurement counts:", __import__("collections").Counter(strings))\nprint("Interpretation: all-zero means constant; nonzero means balanced (promise problem).")\n'''
+            balanced = self.dj_function.currentIndex() == 1
+            body = deutsch_jozsa_code_body(n, balanced=balanced, shots=shots)
         elif algo == 2:
             theta_in = self.tele_theta.value(); phi_in = self.tele_phi.value()
             body = f"""
