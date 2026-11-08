@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+build/
+dist/
+*.spec
+.venv/
+deepseek_config.json
+.idea/
+llm_keys.json
+experiments/results/*.log
+experiments/results/*.err
+experiments/results/*mock*.csv
+paper/
