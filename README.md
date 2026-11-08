@@ -99,7 +99,7 @@ cp deepseek_config.example.json deepseek_config.json
 
 典型流程：拖出 `H` + `CNOT` → 运行仿真 → 观察 `|00⟩` 与 `|11⟩` 各占 50% → 导出报告或 PennyLane 代码。
 
-## 教学判据：这次演示还能不能信
+## 教学判据
 
 对 `H(q0) + CNOT(q0, qi)` 构成的 GHZ 族，在门级比特翻转噪声下，含噪分布与理想分布的总变差距离（TVD）
 有闭式解，可在 O(n) 时间内算出。给定「TVD 不超过 10%」的口径，就能反解出每个比特数对应的噪声上限 p*(n)：
@@ -109,13 +109,12 @@ cp deepseek_config.example.json deepseek_config.json
 | p*(n) | 0.053 | 0.026 | 0.018 | 0.013 | 0.011 | 0.009 | 0.008 |
 
 实现见 `quantum_circuit_studio/thresholds.py`（约 100 行，不引入额外依赖），对应测试在 `tests/test_thresholds.py` 与 `tests/test_gui.py`。
-开启噪声仿真后，分析面板会多出一行提示：当前比特数对应的 p*(n)、以及当前噪声是否已越过 10% 偏差边界。模型推导与实验数据不在本仓库。
+开启噪声仿真后，分析面板会多出一行提示：当前比特数对应的 p*(n)、以及当前噪声是否已越过 10% 偏差边界。
 
 ## 实验代码
 
 `experiments/` 是本项目做定量验证用的脚本：噪声容限判据、误差缓解对照、以及 LLM 生成电路的三臂对照实验。运行 `python -m experiments.reproduce` 会把 CSV 结果与图重新生成到 `experiments/results/` 和 `experiments/figures/`。
 
-这部分不影响工具本身的使用，只是为了让文章里的数字可以从仓库复算出来。
 
 ## 项目结构
 
