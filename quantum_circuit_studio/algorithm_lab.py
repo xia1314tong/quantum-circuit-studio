@@ -36,11 +36,11 @@ def deutsch_jozsa_code_body(n, balanced, shots):
 class AlgorithmLabDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("量子算法实验室")
+        self.setWindowTitle("量子算法")
         self.resize(1100, 780)
         self.last_code = ""
         root = QVBoxLayout(self)
-        intro = QLabel("量子算法实验室 · 数学原理 / 电路步骤 / 数值验证 / PennyLane 代码导出")
+        intro = QLabel("量子算法 · 数学原理 / 电路步骤 / 数值验证 / PennyLane 代码导出")
         intro.setStyleSheet("font-size:17px;font-weight:bold;color:#1d4ed8;padding:5px")
         root.addWidget(intro)
         form_box = QGroupBox("实验参数")

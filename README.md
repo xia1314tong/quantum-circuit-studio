@@ -28,7 +28,7 @@
 - 导出 CSV 数据、图表 PNG、Markdown 实验报告、可直接运行的 PennyLane 代码
 - 电路与实验配置保存 / 加载为 JSON，便于复现与分享
 
-**量子算法实验室**
+**量子算法**
 - Grover 搜索、Deutsch–Jozsa、量子隐形传态、量子傅里叶变换
 - 每种算法给出数学推导、线路步骤、逐轮数值验证与代码导出
 
@@ -40,7 +40,7 @@
 - 解释当前电路的行为，或生成实验报告
 - 未配置 API Key 时其余功能完全可用
 
-![量子算法实验室](docs/screenshot-lab.png)
+![量子算法](docs/screenshot-lab.png)
 
 ## 下载即用（Windows）
 
@@ -127,7 +127,7 @@ quantum-circuit-studio/
 │   ├── thresholds.py                # 教学容限判据 p*(n)（纯 Python，无额外依赖）
 │   ├── widgets.py                   # 量子门工具箱、线路画布、AI 请求线程
 │   ├── main_window.py               # 主窗口：Mixin 组合与配置加载
-│   ├── algorithm_lab.py             # 量子算法实验室（Grover / DJ / 传态 / QFT）
+│   ├── algorithm_lab.py             # 量子算法（Grover / DJ / 传态 / QFT）
 │   ├── quantum_demo.py              # 量子态演化教学演示
 │   └── mixins/
 │       ├── ui.py                    # 界面布局、控件与事件
