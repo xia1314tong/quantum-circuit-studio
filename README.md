@@ -86,7 +86,6 @@ cp deepseek_config.example.json deepseek_config.json
 
 也可以用环境变量 `DEEPSEEK_API_KEY` 提供 Key，此时以配置文件为准。
 
-> `deepseek_config.json` 已被 `.gitignore` 忽略，**本仓库不包含任何密钥**。提交代码或分发程序前请确认它不在版本控制中。
 
 ## 使用提示
 
@@ -97,7 +96,7 @@ cp deepseek_config.example.json deepseek_config.json
 | 撤销 / 重做 | `Ctrl+Z` / `Ctrl+Y`（或 `Ctrl+Shift+Z`） |
 | 载入示例 | 点击「Bell 态示例」 |
 
-典型流程：拖出 `H` + `CNOT` → 运行仿真 → 观察 `|00⟩` 与 `|11⟩` 各占 50% → 导出报告或 PennyLane 代码。
+流程：拖出 `H` + `CNOT` → 运行仿真 → 观察 `|00⟩` 与 `|11⟩` 各占 50% → 导出报告或 PennyLane 代码。
 
 ## 教学判据
 
@@ -108,7 +107,7 @@ cp deepseek_config.example.json deepseek_config.json
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | p*(n) | 0.053 | 0.026 | 0.018 | 0.013 | 0.011 | 0.009 | 0.008 |
 
-实现见 `quantum_circuit_studio/thresholds.py`（约 100 行，不引入额外依赖），对应测试在 `tests/test_thresholds.py` 与 `tests/test_gui.py`。
+实现见 `quantum_circuit_studio/thresholds.py`，对应测试在 `tests/test_thresholds.py` 与 `tests/test_gui.py`。
 开启噪声仿真后，分析面板会多出一行提示：当前比特数对应的 p*(n)、以及当前噪声是否已越过 10% 偏差边界。
 
 ## 实验代码
@@ -144,28 +143,14 @@ quantum-circuit-studio/
 └── deepseek_config.example.json
 ```
 
-主窗口采用 **组合 + Mixin** 的分层方式：`MainWindow` 只负责组合与初始化，具体能力（界面、电路、仿真、导出、助手、历史）各自独立成模块，便于单独阅读和替换。计算逻辑集中在 `engine.py`，测试可直接对解析解断言，无需启动界面。
-
-## 常见问题
-
-**matplotlib 图表中文显示为方块？**
-`common.py` 中已按平台设置中文字体候选；若系统缺少该字体，请安装或改为本机已有字体。
-
-**运行后没有任何反应？**
-确认使用的是安装了依赖的解释器（`python -m pip list | findstr PySide6`），而不是系统中其他 Python。
-
-**开启噪声后结果与理想情况差异很大？**
-噪声按比特逐个施加，概率越高偏差越明显；这是密度矩阵模拟的真实行为，可用于对比「理想 vs 含噪」两种结果。
-
-**AI 助手报错 / 无响应？**
-检查 Key 是否有效、模型名是否正确、账户是否有余额；网络受限时可先只用仿真与算法实验室功能。
+主窗口采用 **组合 + Mixin** 的分层方式：`MainWindow` 只负责组合与初始化，具体能力（界面、电路、仿真、导出、助手、历史）各自独立成模块，便于单独阅读和替换。计算逻辑集中在 `engine.py`。
 
 ## 技术说明
 
 - 仿真：PennyLane `default.qubit`（理想）与 `default.mixed`（含噪声）
 - 数值：状态向量 / 密度矩阵直接计算，指标由 Python 与 NumPy 实现
-- 界面：PySide6（Qt for Python），自定义 QSS 主题
-- 算法实验室的有限采样由理论概率做多项分布抽样得到，属于教学级演示，不追求硬件级噪声建模
+- 界面：PySide6，自定义 QSS 主题
+- 算法实验室的有限采样由理论概率做多项分布抽样得到，属于教学演示，不追求硬件级噪声建模
 
 ## 许可证
 
