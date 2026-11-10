@@ -120,7 +120,6 @@ class CircuitCanvas(QWidget):
         self.dragging = None
         self.drag_anchor = None
 
-        # 拖动开始前的电路快照
         self.drag_start_snapshot = None
         self.drag_history_recorded = False
 
@@ -245,7 +244,6 @@ class CircuitCanvas(QWidget):
                 "param": float(np.pi / 2)
             }
 
-        # 添加前保存状态
         self.history_callback()
 
         self.gates.append(gate)
@@ -308,7 +306,6 @@ class CircuitCanvas(QWidget):
 
         painter.drawText(15, 25, "量子线路画布")
 
-        # 量子比特线路
         for wire in range(self.num_wires):
             y = self.wire_y(wire)
 
@@ -329,7 +326,6 @@ class CircuitCanvas(QWidget):
             painter.setPen(QColor("#1e293b"))
             painter.drawText(18, y + 5, f"q{wire}")
 
-        # 按照列顺序绘制门
         ordered = sorted(
             enumerate(self.gates),
             key=lambda item: (
@@ -659,7 +655,6 @@ class CircuitCanvas(QWidget):
         if count == self.num_wires:
             return
 
-        # 改动前保存完整状态
         self.history_callback()
 
         self.num_wires = count

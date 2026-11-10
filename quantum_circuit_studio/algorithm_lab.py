@@ -154,14 +154,12 @@ class AlgorithmLabDialog(QDialog):
         """精确模拟三比特传态四个测量分支；basis 顺序为 |q0 q1 q2>。"""
         bell = np.array([1, 0, 0, 1], dtype=complex) / math.sqrt(2)
         state = np.kron(input_state, bell)
-        # CNOT control q0 -> target q1
         out = np.zeros_like(state)
         for idx, amp in enumerate(state):
             b0, b1, b2 = (idx >> 2) & 1, (idx >> 1) & 1, idx & 1
             if b0: b1 ^= 1
             out[b0*4+b1*2+b2] += amp
         state = out
-        # H on q0
         out = state.copy()
         for base in range(4):
             a, b = state[base], state[4+base]
@@ -191,7 +189,6 @@ class AlgorithmLabDialog(QDialog):
                 rounds = len(hist)-1; probs = np.abs(state)**2
                 lines = ["Grover 量子搜索算法", "目标：在 N 个基态中寻找标记态。", f"N=2^n={2**n}，M=1，θ=arcsin(√(M/N))={math.asin(1/math.sqrt(2**n)):.6f} rad", f"推荐迭代次数约为 round(π/(4θ)-1/2)={recommended}。", "每轮由 Oracle 相位标记和 Diffusion 关于平均振幅反射组成。", f"当前执行 {rounds} 轮；目标态概率理论值 sin²((2r+1)θ)={math.sin((2*rounds+1)*math.asin(1/math.sqrt(2**n)))**2:.6f}。", "注意：小规模搜索中迭代次数取整会影响成功率；过度迭代可能降低成功率。"]
                 result = [f"目标态 |{target}⟩ 概率：{probs[idx]:.8f}", f"最高概率态：|{format(int(np.argmax(probs)), f'0{n}b')}⟩，概率 {probs.max():.8f}", "各轮目标态概率："] + [f"  第 {i} 轮：{abs(st[idx])**2:.8f}" for i, st in enumerate(hist)]
-                # 理论/数值一致性
                 result.append(f"状态归一化检查 Σ|α|²={probs.sum():.12f}")
                 rng = np.random.default_rng()
                 counts = rng.multinomial(shots, probs / probs.sum())

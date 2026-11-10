@@ -28,7 +28,6 @@ class MainWindow(AssistantMixin, HistoryMixin, UIMixin, CircuitMixin, Simulation
 
         self.resize(1250, 1000)
 
-        # 撤销和重做栈
         self.undo_stack = []
         self.redo_stack = []
 

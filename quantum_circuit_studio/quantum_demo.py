@@ -187,7 +187,6 @@ class QuantumDemoDialog(QDialog):
         state = item['state']
         self.figure.clear()
         ax = self.figure.add_subplot(121, projection='3d')
-        # 球面线框
         u = np.linspace(0, 2*np.pi, 36); v = np.linspace(0, np.pi, 20)
         x = np.outer(np.cos(u), np.sin(v)); y = np.outer(np.sin(u), np.sin(v)); z = np.outer(np.ones_like(u), np.cos(v))
         ax.plot_wireframe(x, y, z, rstride=3, cstride=3, color='#C7D2E0', linewidth=.45, alpha=.65)

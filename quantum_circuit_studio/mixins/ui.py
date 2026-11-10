@@ -54,7 +54,6 @@ class UIMixin:
         intro_row.addWidget(self.algorithm_lab_button)
         layout.addLayout(intro_row)
 
-        # 顶部工具栏
         toolbar = QHBoxLayout()
 
         toolbar.addWidget(QLabel("量子比特数："))
@@ -68,7 +67,6 @@ class UIMixin:
         )
         toolbar.addWidget(self.wire_spin)
 
-        # 测量次数设置
         toolbar.addWidget(QLabel("测量次数："))
 
         self.shots_spin = QSpinBox()
@@ -107,14 +105,10 @@ class UIMixin:
         toolbar.addStretch()
         layout.addLayout(toolbar)
 
-        # 主工作区：上下可拖动调整高度
-        # 最外层垂直分隔器：上方为量子线路画布，下方为参数、噪声与结果。
-        # 拖动两者之间的横向分隔条，可以自由调整画布高度。
         self.main_splitter = QSplitter(Qt.Orientation.Vertical)
         self.main_splitter.setChildrenCollapsible(False)
         self.main_splitter.setHandleWidth(8)
 
-        # 上方：工具箱 + 线路画布
         workspace_splitter = QSplitter(Qt.Orientation.Horizontal)
         workspace_splitter.setChildrenCollapsible(False)
         workspace_splitter.setHandleWidth(8)
@@ -161,7 +155,6 @@ class UIMixin:
         bottom_layout.setSpacing(8)
         self.bottom_panel = bottom_panel
 
-        # 合并面板：选中量子门参数 + 噪声设置
         settings_box = QGroupBox("量子门参数与噪声设置")
         settings_layout = QHBoxLayout(settings_box)
         settings_layout.setContentsMargins(12, 12, 12, 10)
@@ -188,7 +181,6 @@ class UIMixin:
         self.angle_radians_label.setMinimumWidth(105)
         settings_layout.addWidget(self.angle_radians_label)
 
-        # 视觉分隔符：参数设置与噪声设置仍属于同一个面板
         separator = QLabel("│")
         separator.setStyleSheet("color: #D0D5DD; font-size: 18px;")
         settings_layout.addWidget(separator)
@@ -222,13 +214,11 @@ class UIMixin:
         self.update_noise_controls()
         bottom_layout.addWidget(settings_box)
 
-        # 结果区：明细和图表左右排列，可独立调整宽度
         result_box = QGroupBox("仿真结果")
         self.result_box = result_box
         result_layout = QVBoxLayout(result_box)
         result_layout.setContentsMargins(8, 12, 8, 8)
 
-        # 当前实验结果状态：未运行、最新或已过期
         result_state_row = QHBoxLayout()
         result_state_row.addWidget(QLabel("结果状态："))
         self.result_state_label = QLabel("尚未运行仿真")
@@ -286,7 +276,6 @@ class UIMixin:
         result_box.setMinimumHeight(430)
         bottom_layout.addWidget(result_box, 0)
 
-        # 实验分析：独立面板，不再挤占图表区域
         analysis_box = QGroupBox("实验分析")
         self.analysis_box = analysis_box
         analysis_layout = QVBoxLayout(analysis_box)
@@ -308,7 +297,6 @@ class UIMixin:
         analysis_box.setMinimumHeight(125)
         bottom_layout.addWidget(analysis_box, 0)
 
-        # 导出操作独立排列
         export_box = QGroupBox("实验结果导出")
         export_row = QHBoxLayout(export_box)
         export_row.addWidget(QLabel("保存结果："))
@@ -347,8 +335,6 @@ class UIMixin:
         config_layout.addStretch(1)
         bottom_layout.addWidget(config_box)
 
-        # 内容高度大于视口时，以下滚动区会显示独立的垂直滚动条。
-        # 因此上方画布和下方参数/结果可以各自滚动，不互相抢占空间。
         bottom_panel.setMinimumHeight(850)
         bottom_scroll = QScrollArea()
         bottom_scroll.setObjectName("bottomResultsScroll")
@@ -516,7 +502,6 @@ class UIMixin:
         if np.isclose(old_value, radians):
             return
 
-        # 修改前保存历史状态
         self.record_history()
 
         gate["param"] = radians

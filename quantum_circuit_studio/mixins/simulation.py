@@ -13,7 +13,6 @@ class SimulationMixin:
         self.last_results = None
         self.refresh_result_status()
 
-        # 仿真前执行电路合法性检查
         errors = self.collect_validation_errors()
 
         if errors:
