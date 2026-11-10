@@ -65,7 +65,6 @@ def qiskit_distribution(num_wires: int, p: float) -> np.ndarray:
     hadamard = np.array([[1, 1], [1, -1]], dtype=complex) / math.sqrt(2)
     state = DensityMatrix.from_label("0" * num_wires)
 
-    # H(q0) + 信道
     state = state.evolve(Operator(_embed(num_wires, 0, hadamard)))
     state = state.evolve(_channel(num_wires, 0, p))
 

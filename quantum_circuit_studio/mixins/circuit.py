@@ -102,7 +102,6 @@ class CircuitMixin:
 
                 wires = {wire}
 
-            # 检查旋转参数
             if name in ROTATION_GATES:
 
                 param = gate.get("param", np.pi / 2)
@@ -120,7 +119,6 @@ class CircuitMixin:
                     )
                     continue
 
-            # 检查同一列是否有门占用相同量子比特
             for wire in wires:
 
                 key = (int(col), int(wire))

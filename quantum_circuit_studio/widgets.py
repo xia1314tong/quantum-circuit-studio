@@ -288,7 +288,6 @@ class CircuitCanvas(QWidget):
             )
         )
 
-    # 绘制线路与量子门
     def paintEvent(self, event):
 
         painter = QPainter(self)

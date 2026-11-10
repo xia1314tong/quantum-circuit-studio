@@ -101,7 +101,6 @@ class SimulationMixin:
             else:
                 analysis_lines.append("噪声模拟：未启用")
 
-            # 5. 整理结果文本
             probability_rows = [
                 f"|{label}⟩：{prob:.6f}（{prob * 100:.2f}%）"
                 for label, prob in zip(labels, ideal_probs)
@@ -152,11 +151,9 @@ class SimulationMixin:
                     "\n".join(noisy_sample_rows) or "无测量结果"
                 ])
 
-            # 结果明细与实验分析分开显示，实验分析有独立面板。
             self.result_label.setText("\n\n".join(result_parts))
             self.analysis_label.setText("\n".join(analysis_lines))
 
-            # 6. 绘制理想与含噪声结果
             self.figure.clear()
             ax = self.figure.add_subplot(111)
 
@@ -213,7 +210,6 @@ class SimulationMixin:
             self.figure.tight_layout()
             self.chart.draw()
 
-            # 7. 保存本次仿真数据，供后续导出
             self.last_results = {
                 "num_wires": n,
                 "gates": copy.deepcopy(gates),
@@ -246,7 +242,6 @@ class SimulationMixin:
                 f"仿真完成：{shots} 次测量"
                 + ("，已完成含噪声对比" if noise_enabled else "")
             )
-            # 仿真结束后，自动将下方独立滚动区域定位到结果图附近。
             if hasattr(self, "bottom_scroll") and hasattr(self, "result_box"):
                 self.bottom_scroll.ensureWidgetVisible(self.result_box, 0, 0)
 

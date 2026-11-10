@@ -22,7 +22,6 @@ class HistoryMixin:
         if len(self.undo_stack) > MAX_HISTORY:
             self.undo_stack.pop(0)
 
-        # 有新操作后，清除旧的重做记录
         self.redo_stack.clear()
 
         self.update_history_buttons()
@@ -51,7 +50,6 @@ class HistoryMixin:
             self.set_status("没有可撤销的操作")
             return
 
-        # 当前状态放入重做栈
         self.redo_stack.append(self.make_snapshot())
 
         previous = self.undo_stack.pop()
@@ -67,7 +65,6 @@ class HistoryMixin:
             self.set_status("没有可重做的操作")
             return
 
-        # 当前状态放入撤销栈
         self.undo_stack.append(self.make_snapshot())
 
         if len(self.undo_stack) > MAX_HISTORY:

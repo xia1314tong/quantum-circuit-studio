@@ -322,7 +322,6 @@ class ExportMixin:
             if not isinstance(config, dict):
                 raise ValueError("配置内容格式无效。")
 
-            # 验证量子比特数与测量次数
             count = int(config.get("num_wires", 2))
             if not 1 <= count <= 8:
                 raise ValueError("量子比特数必须在 1 到 8 之间。")
@@ -331,7 +330,6 @@ class ExportMixin:
             if not 100 <= shots <= 100000:
                 raise ValueError("测量次数必须在 100 到 100000 之间。")
 
-            # 验证噪声配置
             noise_enabled = bool(config.get("noise_enabled", False))
             noise_model = config.get("noise_model", "bitflip")
             valid_noise_models = {"bitflip", "phaseflip", "depolarizing"}
@@ -392,7 +390,6 @@ class ExportMixin:
                     }
                     used_wires = {wire}
 
-                # 同一列不能有两个门占用同一量子比特
                 for wire in used_wires:
                     key = (col, wire)
                     if key in occupied:
