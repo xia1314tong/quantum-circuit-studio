@@ -46,10 +46,10 @@
 
 不想装 Python 的话，用打包好的版本：
 
-1. 打开 [Releases](https://github.com/xia1314tong/quantum-circuit-studio/releases/latest)，下载 `QuantumCircuitStudio-1.0.0-win64.zip`（约 123 MB）
+1. 打开 [Releases](https://github.com/xia1314tong/quantum-circuit-studio/releases/latest)，下载 `QuantumCircuitStudio-1.0.0-win64.zip`
 2. 解压到任意目录，双击 `量子电路仿真平台.exe`
 
-免安装、免配置，首次启动约 3–5 秒。AI 助手需要自己的 DeepSeek API Key，把 `deepseek_config.json` 放到 exe 同级目录即可（格式见 `deepseek_config.example.json`）；不配置也不影响仿真、导出与算法实验室。
+免安装、免配置。AI 助手需要自己的 DeepSeek API Key，把 `deepseek_config.json` 放到 exe 同级目录即可（格式见 `deepseek_config.example.json`）；不配置也不影响仿真、导出与算法实验室。
 
 > 打包版为 Windows x64；macOS / Linux 请从源码运行。
 
